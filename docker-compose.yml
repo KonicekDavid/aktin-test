@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  php-app:
+    build: .
+    container_name: php-app
+    networks:
+      - aktin-network
+    volumes:
+      - .:/var/www/aktin-test
+
+  nginx-server:
+    image: nginx:latest
+    container_name: nginx-server
+    networks:
+      - aktin-network
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/var/www/aktin-test/
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - php-app
+
+networks:
+  aktin-network:
+    driver: bridge
