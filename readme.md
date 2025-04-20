@@ -27,7 +27,9 @@ download it following [the instructions](https://doc.nette.org/composer). Then u
 	cd path/to/install
 
 
-Make directories `temp/` and `log/` writable.
+Make directories `temp/` and `log/` writable. 
+
+Create file **local.neon** in config/ directory
 
 
 Web Server Setup
