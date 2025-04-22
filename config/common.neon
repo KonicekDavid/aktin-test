@@ -7,11 +7,10 @@ application:
 		5xx: Error:Error5xx
 	mapping: App\Presentation\*\**Presenter
 
-
-database:
-	dsn: 'sqlite::memory:'
-	user:
-	password:
+doctrine:
+    connection:
+        driver: pdo_sqlite
+        path: %appDir%/../db/database.sqlite
 
 
 latte:
