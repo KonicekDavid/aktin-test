@@ -4,6 +4,7 @@ WORKDIR /var/www/aktin-test
 
 RUN apt-get update && apt-get install -y \
     libsqlite3-dev \
+    sqlite3 \
     unzip \
     git \
     && docker-php-ext-install pdo pdo_sqlite
