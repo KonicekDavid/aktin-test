@@ -2,11 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Router;
+namespace App\Core;
 
 use Contributte\ApiRouter\ApiRoute;
 use Nette;
-use Nette\Application\Routers\Route;
 use Nette\Application\Routers\RouteList;
 
 
@@ -25,7 +24,7 @@ final class RouterFactory
         $apiModule[] = new ApiRoute('/auth/login', 'Authorization', [
             'methods' => ['POST' => 'login']
         ]);
-        $apiModule[] = new ApiRoute('/users[/<id>]', 'Users', [
+        $apiModule[] = new ApiRoute('/users[/<id>]', 'User', [
             'methods' => [
                 'GET' => 'default',
                 'POST' => 'default',
@@ -33,7 +32,7 @@ final class RouterFactory
                 'DELETE' => 'default'
             ]
         ]);
-        $apiModule[] = new ApiRoute('/articles[/<id>]', 'Articles', [
+        $apiModule[] = new ApiRoute('/articles[/<id>]', 'Article', [
             'methods' => [
                 'GET' => 'default',
                 'POST' => 'default',
@@ -44,6 +43,6 @@ final class RouterFactory
 
         $router[] = $apiModule;
 
-		return $router;
+        return $router;
 	}
 }
