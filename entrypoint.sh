@@ -17,4 +17,8 @@ else
     echo "SQLite database already exists."
 fi
 
+chown -R www-data:www-data /var/www/aktin-test/db
+chmod -R 775 /var/www/aktin-test/db
+#chown root:root /var/www/aktin-test/db/database.sqlite
+
 exec php-fpm

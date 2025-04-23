@@ -5,10 +5,11 @@
 
 namespace App\Model\Entity;
 
+use App\Model\Repository\UserRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity]
+#[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: 'user')]
 class User {
 
@@ -92,4 +93,35 @@ class User {
         return $this->articles;
     }
 
+    /**
+     * @param string $email
+     * @return void
+     */
+    public function setEmail(string $email): void {
+        $this->email = $email;
+    }
+
+    /**
+     * @param string $passwordHash
+     * @return void
+     */
+    public function setPasswordHash(string $passwordHash): void {
+        $this->passwordHash = $passwordHash;
+    }
+
+    /**
+     * @param string $name
+     * @return void
+     */
+    public function setName(string $name): void {
+        $this->name = $name;
+    }
+
+    /**
+     * @param string $role
+     * @return void
+     */
+    public function setRole(string $role): void {
+        $this->role = $role;
+    }
 }

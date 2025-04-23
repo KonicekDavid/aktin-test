@@ -1,11 +1,37 @@
 services:
 	- App\Core\RouterFactory::createRouter
+	- App\Security\JWTService(%jwt.secret%, %jwt.ttl%)
+
+	#Repositories
+
+	#Facades
+	- App\Model\Facade\UserFacade
+	- App\Model\Facade\ArticleFacade
 
 
-search:
-	-	in: %appDir%
-		classes:
-			- *Facade
-			- *Factory
-			- *Repository
-			- *Service
+#search:
+#	-	in: %appDir%
+#		classes:
+#			- *Facade
+#			- *Factory
+#			- *Repository
+#			- *Service
+
+extensions:
+    nettrine.dbal: Nettrine\DBAL\DI\DbalExtension
+    nettrine.orm: Nettrine\ORM\DI\OrmExtension
+
+nettrine.dbal:
+  connections:
+      default:
+        driver: pdo_sqlite
+        path: db/database.sqlite
+
+nettrine.orm:
+  managers:
+    default:
+      connection: default
+      mapping:
+        App:
+          directories: [%appDir%/Model/Entity]
+          namespace: App\Model\Entity

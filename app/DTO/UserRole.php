@@ -8,6 +8,6 @@ namespace App\DTO;
 enum UserRole: string
 {
     case ADMIN = 'admin';
-    case Author = 'author';
-    case Reader = 'reader';
+    case AUTHOR = 'author';
+    case READER = 'reader';
 }

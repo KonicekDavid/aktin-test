@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "79cca861c72389ae8d14bfdca4dadd5d",
+    "content-hash": "263e46473b78d53a463eaaf02b95a510",
     "packages": [
         {
             "name": "adhocore/jwt",
@@ -2309,6 +2309,166 @@
                 "source": "https://github.com/nette/utils/tree/v4.0.6"
             },
             "time": "2025-03-30T21:06:30+00:00"
+        },
+        {
+            "name": "nettrine/dbal",
+            "version": "v0.10.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/contributte/doctrine-dbal.git",
+                "reference": "e16d6862b33c6d859f4b60cdca39a77fec7f612d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/contributte/doctrine-dbal/zipball/e16d6862b33c6d859f4b60cdca39a77fec7f612d",
+                "reference": "e16d6862b33c6d859f4b60cdca39a77fec7f612d",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/dbal": "^4.2.1",
+                "nette/di": "^3.2.2",
+                "php": ">=8.2",
+                "psr/cache": "^3.0.0",
+                "psr/log": "^3.0"
+            },
+            "require-dev": {
+                "contributte/console": "^0.10.1",
+                "contributte/phpstan": "^0.2.0",
+                "contributte/qa": "^0.4.0",
+                "contributte/tester": "^0.3.0",
+                "ext-pdo": "*",
+                "mockery/mockery": "^1.3.5",
+                "monolog/monolog": "^3.8.0",
+                "symfony/cache": "^7.1.9",
+                "tracy/tracy": "^2.10.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.11.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Nettrine\\DBAL\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Milan Felix Šulc",
+                    "homepage": "https://f3l1x.io"
+                }
+            ],
+            "description": "Doctrine DBAL for Nette Framework",
+            "homepage": "https://github.com/contributte/doctrine-dbal",
+            "keywords": [
+                "database",
+                "dbal",
+                "doctrine",
+                "mysql",
+                "nette",
+                "postgres",
+                "sqlite"
+            ],
+            "support": {
+                "issues": "https://github.com/contributte/doctrine-dbal/issues",
+                "source": "https://github.com/contributte/doctrine-dbal/tree/v0.10.2"
+            },
+            "funding": [
+                {
+                    "url": "https://contributte.org/partners.html",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/f3l1x",
+                    "type": "github"
+                }
+            ],
+            "time": "2025-04-02T10:21:02+00:00"
+        },
+        {
+            "name": "nettrine/orm",
+            "version": "v0.10.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/contributte/doctrine-orm.git",
+                "reference": "28fe522321561a0496b20b06f95de7611bfdce24"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/contributte/doctrine-orm/zipball/28fe522321561a0496b20b06f95de7611bfdce24",
+                "reference": "28fe522321561a0496b20b06f95de7611bfdce24",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/orm": "^3.3.0",
+                "nette/di": "^3.1.2",
+                "nettrine/dbal": "^0.10.0",
+                "php": ">=8.2",
+                "psr/cache": "^3.0.0",
+                "psr/log": "^3.0.2"
+            },
+            "conflict": {
+                "doctrine/event-manager": "<2.0.0"
+            },
+            "require-dev": {
+                "contributte/phpstan": "^0.2.0",
+                "contributte/qa": "^0.4",
+                "contributte/tester": "^0.3.0",
+                "mockery/mockery": "^1.6.12",
+                "monolog/monolog": "^3.8.0",
+                "symfony/cache": "^7.1.9",
+                "symfony/console": "^7.1.8 ",
+                "tracy/tracy": "^2.10.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.10.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Nettrine\\ORM\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Milan Felix Šulc",
+                    "homepage": "https://f3l1x.io"
+                }
+            ],
+            "description": "Doctrine ORM for Nette Framework",
+            "homepage": "https://github.com/contributte/doctrine-orm",
+            "keywords": [
+                "database",
+                "doctrine",
+                "nette",
+                "orm"
+            ],
+            "support": {
+                "issues": "https://github.com/contributte/doctrine-orm/issues",
+                "source": "https://github.com/contributte/doctrine-orm/tree/v0.10.0"
+            },
+            "funding": [
+                {
+                    "url": "https://contributte.org/partners.html",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/f3l1x",
+                    "type": "github"
+                }
+            ],
+            "time": "2025-03-24T08:51:20+00:00"
         },
         {
             "name": "psr/cache",

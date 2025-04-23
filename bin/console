@@ -1,0 +1,14 @@
+#!/usr/bin/env php
+<?php
+
+require __DIR__ . '/../vendor/autoload.php';
+
+use Doctrine\ORM\Tools\Console\ConsoleRunner;
+use App\Bootstrap;
+
+$container = (new Bootstrap())->bootWebApplication();
+
+$em = $container->getByType(\Doctrine\ORM\Tools\Console\EntityManagerProvider::class);
+
+$application = ConsoleRunner::createApplication($em);
+$application->run();

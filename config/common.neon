@@ -1,5 +1,7 @@
 parameters:
-
+    jwt:
+        secret: 'LaAO8sgle3CNL6/MiM5l6A==' #TODO: move to local.neon
+        ttl: 3600
 
 application:
 	errorPresenter:
@@ -7,18 +9,11 @@ application:
 		5xx: Error:Error5xx
 	mapping: App\Presentation\*\**Presenter
 
-doctrine:
-    connection:
-        driver: pdo_sqlite
-        path: %appDir%/../db/database.sqlite
-
-
 latte:
 	strictTypes: yes
 	strictParsing: yes
 	extensions:
 		- App\Presentation\Accessory\LatteExtension
-
 
 di:
 	export:

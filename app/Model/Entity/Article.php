@@ -5,10 +5,11 @@
 
 namespace App\Model\Entity;
 
+use App\Model\Repository\ArticleRepository;
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity]
+#[ORM\Entity(repositoryClass: ArticleRepository::class)]
 #[ORM\Table(name: 'article')]
 class Article {
 
