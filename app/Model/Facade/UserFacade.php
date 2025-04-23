@@ -26,9 +26,6 @@ class UserFacade {
      * @throws \InvalidArgumentException
      */
     public function create(array $values): User {
-        print_r($this->em->getRepository(User::class)->findAll(), true);
-        die('test');
-
         $user = $this->prepareObject($values);
 
         $this->em->persist($user);
@@ -88,5 +85,13 @@ class UserFacade {
         $user->setPasswordHash($passwordHash);
 
         return $user;
+    }
+
+    public function getById(int $id): ?User {
+        return $this->em->getRepository(User::class)->find($id);
+    }
+
+    public function getAll(): array {
+        return $this->em->getRepository(User::class)->findAll();
     }
 }

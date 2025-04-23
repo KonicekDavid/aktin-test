@@ -19,19 +19,19 @@ class Article {
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
     #[ORM\GeneratedValue]
-    private int $id;
+    public int $id;
 
     /**
      * @var string
      */
     #[ORM\Column(type: 'string')]
-    private string $title;
+    public string $title;
 
     /**
      * @var string
      */
     #[ORM\Column(type: 'text')]
-    private string $content;
+    public string $content;
 
     /**
      * @var User
@@ -44,11 +44,11 @@ class Article {
      * @var DateTimeImmutable
      */
     #[ORM\Column(type: 'datetime_immutable')]
-    private DateTimeImmutable $createdAt;
+    public DateTimeImmutable $createdAt;
 
     /**
      * @var DateTimeImmutable
      */
     #[ORM\Column(type: 'datetime_immutable')]
-    private DateTimeImmutable $updatedAt;
+    public DateTimeImmutable $updatedAt;
 }

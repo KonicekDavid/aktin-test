@@ -19,13 +19,13 @@ class User {
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
     #[ORM\GeneratedValue]
-    private int $id;
+    public int $id;
 
     /**
      * @var string
      */
     #[ORM\Column(type: 'string', unique: true)]
-    private string $email;
+    public string $email;
 
     /**
      * @var string
@@ -37,13 +37,13 @@ class User {
      * @var string
      */
     #[ORM\Column(type: 'string')]
-    private string $name;
+    public string $name;
 
     /**
      * @var string
      */
     #[ORM\Column(type: 'string')]
-    private string $role;
+    public string $role;
 
     /**
      * @var Collection

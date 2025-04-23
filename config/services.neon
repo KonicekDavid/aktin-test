@@ -25,7 +25,7 @@ nettrine.dbal:
   connections:
       default:
         driver: pdo_sqlite
-        path: db/database.sqlite
+        path: %appDir%/../db/database.sqlite
 
 nettrine.orm:
   managers:
