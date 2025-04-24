@@ -22,7 +22,7 @@ class AuthorizationPresenter extends Presenter {
         $data = json_decode($this->getHttpRequest()->getRawBody() ?? '', true) ?? [];
         $response = $this->getHttpResponse();
         try {
-            $this->userFacade->create($data);
+            $this->userFacade->createReader($data);
             $response->setCode(Response::S201_Created);
         } catch (\InvalidArgumentException $e) {
             $message = $e->getMessage();
