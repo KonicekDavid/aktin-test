@@ -102,7 +102,7 @@ class Article
      */
     private function validateTitle(string $title): string
     {
-        if (empty($title) || strlen($title) < 1) {
+        if (empty($title)) {
             throw new \InvalidArgumentException('Title cannot be empty');
         }
         return $title;

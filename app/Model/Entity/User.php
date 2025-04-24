@@ -93,6 +93,15 @@ class User
     }
 
     /**
+     * @param Collection $articles
+     * @return void
+     */
+    public function setArticles(Collection $articles): void
+    {
+        $this->articles = $articles;
+    }
+
+    /**
      * @return Collection
      */
     public function getArticles(): Collection
@@ -155,7 +164,7 @@ class User
      */
     private function validateName(string $rawName): string
     {
-        if ($rawName === '' || strlen($rawName) === 0 || strlen($rawName) > 100) {
+        if ($rawName === '' || strlen($rawName) > 100) {
             throw new \InvalidArgumentException(
                 'Invalid name provided. Name must not be empty and max length is 100 characters.'
             );
