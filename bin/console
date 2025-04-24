@@ -3,8 +3,8 @@
 
 require __DIR__ . '/../vendor/autoload.php';
 
-use Doctrine\ORM\Tools\Console\ConsoleRunner;
 use App\Bootstrap;
+use Doctrine\ORM\Tools\Console\ConsoleRunner;
 
 $container = (new Bootstrap())->bootWebApplication();
 

@@ -1,7 +1,6 @@
-<?php declare(strict_types=1);
-/**
- * @author David Koníček
- */
+<?php
+
+declare(strict_types=1);
 
 namespace App\Model\Entity;
 
@@ -13,8 +12,8 @@ use Nette\Utils\Validators;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: 'user')]
-class User {
-
+class User
+{
     /**
      * @var int
      */
@@ -56,42 +55,48 @@ class User {
     /**
      * @return int
      */
-    public function getId(): int {
+    public function getId(): int
+    {
         return $this->id;
     }
 
     /**
      * @return string
      */
-    public function getEmail(): string {
+    public function getEmail(): string
+    {
         return $this->email;
     }
 
     /**
      * @return string
      */
-    public function getPasswordHash(): string {
+    public function getPasswordHash(): string
+    {
         return $this->passwordHash;
     }
 
     /**
      * @return string
      */
-    public function getName(): string {
+    public function getName(): string
+    {
         return $this->name;
     }
 
     /**
      * @return string
      */
-    public function getRole(): string {
+    public function getRole(): string
+    {
         return $this->role;
     }
 
     /**
      * @return Collection
      */
-    public function getArticles(): Collection {
+    public function getArticles(): Collection
+    {
         return $this->articles;
     }
 
@@ -99,7 +104,8 @@ class User {
      * @param string $email
      * @return void
      */
-    public function setEmail(string $email): void {
+    public function setEmail(string $email): void
+    {
         $this->email = $this->validateEmail($email);
     }
 
@@ -107,7 +113,8 @@ class User {
      * @param string $passwordHash
      * @return void
      */
-    public function setPasswordHash(string $passwordHash): void {
+    public function setPasswordHash(string $passwordHash): void
+    {
         $this->passwordHash = $passwordHash;
     }
 
@@ -115,7 +122,8 @@ class User {
      * @param string $name
      * @return void
      */
-    public function setName(string $name): void {
+    public function setName(string $name): void
+    {
         $this->name = $this->validateName($name);
     }
 
@@ -123,7 +131,8 @@ class User {
      * @param string $role
      * @return void
      */
-    public function setRole(string $role): void {
+    public function setRole(string $role): void
+    {
         $this->role = $this->validateRole($role);
     }
 
@@ -131,7 +140,8 @@ class User {
      * @param string $rawEmail
      * @return string
      */
-    private function validateEmail(string $rawEmail): string {
+    private function validateEmail(string $rawEmail): string
+    {
         $email = strtolower($rawEmail);
         if (!Validators::isEmail($email)) {
             throw new \InvalidArgumentException('Invalid email provided.');
@@ -143,9 +153,12 @@ class User {
      * @param string $rawName
      * @return string
      */
-    private function validateName(string $rawName): string {
+    private function validateName(string $rawName): string
+    {
         if ($rawName === '' || strlen($rawName) === 0 || strlen($rawName) > 100) {
-            throw new \InvalidArgumentException('Invalid name provided. Name must not be empty and max length is 100 characters.');
+            throw new \InvalidArgumentException(
+                'Invalid name provided. Name must not be empty and max length is 100 characters.'
+            );
         }
         return $rawName;
     }
@@ -154,7 +167,8 @@ class User {
      * @param string $rawRole
      * @return string
      */
-    private function validateRole(string $rawRole): string {
+    private function validateRole(string $rawRole): string
+    {
         $role = strtolower($rawRole);
         if (!UserRole::tryFrom($role)) {
             throw new \InvalidArgumentException("Role '{$role}' not found!");

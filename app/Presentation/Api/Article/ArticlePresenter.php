@@ -1,7 +1,6 @@
-<?php declare(strict_types=1);
-/**
- * @author David Koníček
- */
+<?php
+
+declare(strict_types=1);
 
 namespace App\Presentation\Api\Article;
 
@@ -14,13 +13,18 @@ use Nette\Http\IResponse;
 use Nette\Http\Response;
 use Tracy\Debugger;
 
-class ArticlePresenter extends BaseApiPresenter {
-
+class ArticlePresenter extends BaseApiPresenter
+{
     /** @var ArticleFacade $articleFacade @inject */
     public ArticleFacade $articleFacade;
 
+    /**
+     * @param int|null $id
+     * @return void
+     */
     #[Requires(methods: ['GET', 'POST', 'PUT', 'DELETE'], forward: false, actions: 'default')]
-    public function actionDefault(?int $id): void {
+    public function actionDefault(?int $id): void
+    {
         $response = $this->getHttpResponse();
 
         switch ($this->getHttpRequest()->getMethod()) {

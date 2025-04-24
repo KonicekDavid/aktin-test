@@ -8,14 +8,13 @@ use Contributte\ApiRouter\ApiRoute;
 use Nette;
 use Nette\Application\Routers\RouteList;
 
-
 final class RouterFactory
 {
-	use Nette\StaticClass;
+    use Nette\StaticClass;
 
-	public static function createRouter(): RouteList
-	{
-		$router = new RouteList;
+    public static function createRouter(): RouteList
+    {
+        $router = new RouteList();
 
         $apiModule = new RouteList('Api');
         $apiModule[] = new ApiRoute('/auth/register', 'Authorization', [
@@ -44,5 +43,5 @@ final class RouterFactory
         $router[] = $apiModule;
 
         return $router;
-	}
+    }
 }

@@ -1,7 +1,6 @@
-<?php declare(strict_types=1);
-/**
- * @author David Koníček
- */
+<?php
+
+declare(strict_types=1);
 
 namespace App\Model\Facade;
 
@@ -11,10 +10,17 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class ArticleFacade
 {
-    public function __construct(private EntityManagerInterface $em) {
+    public function __construct(private EntityManagerInterface $em)
+    {
     }
 
-    public function create(array $data, User $user): Article {
+    /**
+     * @param array $data
+     * @param User $user
+     * @return Article
+     */
+    public function create(array $data, User $user): Article
+    {
         $now = new \DateTimeImmutable();
 
         $article = new Article();
@@ -29,14 +35,28 @@ class ArticleFacade
         return $article;
     }
 
-    public function getAll(): array {
+    /**
+     * @return array
+     */
+    public function getAll(): array
+    {
         return $this->em->getRepository(Article::class)->findAll();
     }
 
-    public function getById(int $id): ?Article {
+    /**
+     * @param int $id
+     * @return Article|null
+     */
+    public function getById(int $id): ?Article
+    {
         return $this->em->getRepository(Article::class)->find($id);
     }
 
+    /**
+     * @param Article $article
+     * @param array $data
+     * @return Article
+     */
     public function update(Article $article, array $data): Article
     {
         if (isset($data['title'])) {
@@ -55,7 +75,12 @@ class ArticleFacade
         return $article;
     }
 
-    public function remove(Article $article): void {
+    /**
+     * @param Article $article
+     * @return void
+     */
+    public function remove(Article $article): void
+    {
         $this->em->remove($article);
         $this->em->flush();
     }

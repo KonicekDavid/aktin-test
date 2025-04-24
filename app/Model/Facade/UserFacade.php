@@ -1,7 +1,6 @@
-<?php declare(strict_types=1);
-/**
- * @author David Koníček
- */
+<?php
+
+declare(strict_types=1);
 
 namespace App\Model\Facade;
 
@@ -16,8 +15,8 @@ class UserFacade
 {
     public function __construct(
         private EntityManagerInterface $em,
-        private Passwords              $passwords,
-        private JWTService             $jwtService
+        private Passwords $passwords,
+        private JWTService $jwtService
     ) {
     }
 
@@ -26,7 +25,8 @@ class UserFacade
      * @return User
      * @throws \InvalidArgumentException
      */
-    public function create(array $values): User {
+    public function create(array $values): User
+    {
         $newUser = $this->prepareObject($values);
 
         $user = $this->em->getRepository(User::class)->findOneBy(['email' => $newUser->getEmail()]);
@@ -43,7 +43,8 @@ class UserFacade
      * @param array $data
      * @return string|null
      */
-    public function login(array $data): ?string {
+    public function login(array $data): ?string
+    {
         $email = $data['email'] ?? null;
         $password = $data['password'] ?? null;
 
@@ -63,7 +64,8 @@ class UserFacade
      * @param int $id
      * @return User|null
      */
-    public function find(int $id): ?User {
+    public function find(int $id): ?User
+    {
         return $this->em->getRepository(User::class)->find($id);
     }
 
@@ -71,14 +73,16 @@ class UserFacade
      * @param int $id
      * @return User|null
      */
-    public function getById(int $id): ?User {
+    public function getById(int $id): ?User
+    {
         return $this->em->getRepository(User::class)->find($id);
     }
 
     /**
      * @return array
      */
-    public function getAll(): array {
+    public function getAll(): array
+    {
         return $this->em->getRepository(User::class)->findAll();
     }
 
@@ -86,7 +90,8 @@ class UserFacade
      * @param array $data
      * @return User
      */
-    public function createReader(array $data): User {
+    public function createReader(array $data): User
+    {
         $data['role'] = UserRole::READER->value;
         return $this->create($data);
     }
@@ -97,7 +102,8 @@ class UserFacade
      * @return User
      * @throws \InvalidArgumentException
      */
-    public function update(int $id, array $data) {
+    public function update(int $id, array $data)
+    {
         $user = $this->find($id);
         if (!$user) {
             throw new \InvalidArgumentException("User not found!");
@@ -126,13 +132,14 @@ class UserFacade
      * @param int $id
      * @return void
      */
-    public function remove(int $id): void {
+    public function remove(int $id): void
+    {
         $user = $this->find($id);
         if (!$user) {
             throw new \InvalidArgumentException("User not found!");
         }
 
-        if (count($this->em->getRepository(Article::class)->findBy(['author' => $user]))){
+        if (count($this->em->getRepository(Article::class)->findBy(['author' => $user]))) {
             throw new \InvalidArgumentException("Cannot delete user with articles!");
         }
 
@@ -145,7 +152,8 @@ class UserFacade
      * @return User
      * @throws \ErrorException
      */
-    public function getByEmail(string $email): User {
+    public function getByEmail(string $email): User
+    {
         $user = $this->em->getRepository(User::class)->findOneBy(['email' => $email]);
         if (!$user) {
             throw new \ErrorException("User not found!");
@@ -158,7 +166,8 @@ class UserFacade
      * @return User
      * @throws \InvalidArgumentException
      */
-    private function prepareObject(array $values): User {
+    private function prepareObject(array $values): User
+    {
         if (strlen($values['password']) < 8) {
             throw new \InvalidArgumentException('Password must be at least 8 characters long');
         }

@@ -1,7 +1,6 @@
-<?php declare(strict_types=1);
-/**
- * @author David Koníček
- */
+<?php
+
+declare(strict_types=1);
 
 namespace App\Model\Entity;
 
@@ -11,8 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ArticleRepository::class)]
 #[ORM\Table(name: 'article')]
-class Article {
-
+class Article
+{
     /**
      * @var int
      */
@@ -52,27 +51,57 @@ class Article {
     #[ORM\Column(type: 'datetime_immutable')]
     public DateTimeImmutable $updatedAt;
 
-    public function setTitle(string $title): void {
+    /**
+     * @param string $title
+     * @return void
+     */
+    public function setTitle(string $title): void
+    {
         $this->title = $this->validateTitle($title);
     }
 
-    public function setContent(string $content): void {
+    /**
+     * @param string $content
+     * @return void
+     */
+    public function setContent(string $content): void
+    {
         $this->content = $content;
     }
 
-    public function setCreatedAt(DateTimeImmutable $createdAt): void {
+    /**
+     * @param DateTimeImmutable $createdAt
+     * @return void
+     */
+    public function setCreatedAt(DateTimeImmutable $createdAt): void
+    {
         $this->createdAt = $createdAt;
     }
 
-    public function setUpdatedAt(DateTimeImmutable $updatedAt): void {
+    /**
+     * @param DateTimeImmutable $updatedAt
+     * @return void
+     */
+    public function setUpdatedAt(DateTimeImmutable $updatedAt): void
+    {
         $this->updatedAt = $updatedAt;
     }
 
-    public function setAuthor(User $author): void {
+    /**
+     * @param User $author
+     * @return void
+     */
+    public function setAuthor(User $author): void
+    {
         $this->author = $author;
     }
 
-    private function validateTitle(string $title): string {
+    /**
+     * @param string $title
+     * @return string
+     */
+    private function validateTitle(string $title): string
+    {
         if (empty($title) || strlen($title) < 1) {
             throw new \InvalidArgumentException('Title cannot be empty');
         }

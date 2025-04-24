@@ -1,7 +1,6 @@
-<?php declare(strict_types=1);
-/**
- * @author David Koníček
- */
+<?php
+
+declare(strict_types=1);
 
 namespace App\Presentation\Api;
 
@@ -11,8 +10,8 @@ use App\Model\Facade\UserFacade;
 use App\Security\JWTService;
 use Nette\Application\UI\Presenter;
 
-abstract class BaseApiPresenter extends Presenter {
-
+abstract class BaseApiPresenter extends Presenter
+{
     /** @var JWTService $jwtService @inject */
     public JWTService $jwtService;
 
@@ -44,6 +43,10 @@ abstract class BaseApiPresenter extends Presenter {
         }
     }
 
+    /**
+     * @param UserRole|array $roles
+     * @return void
+     */
     protected function requireRole(UserRole|array $roles): void
     {
         if (is_array($roles)) {

@@ -1,27 +1,25 @@
-<?php declare(strict_types=1);
+<?php
 
-/**
- * @author David Koníček
- */
+declare(strict_types=1);
 
 namespace App\Presentation\Api\User;
 
 use App\DTO\UserRole;
-use App\Model\Facade\UserFacade;
 use App\Presentation\Api\BaseApiPresenter;
 use Nette\Application\Attributes\Requires;
 use Nette\Http\IResponse;
 use Nette\Http\Response;
 use Tracy\Debugger;
 
-class UserPresenter extends BaseApiPresenter {
-
-    /** @var UserFacade $userFacade @inject */
-    public UserFacade $userFacade;
-
+class UserPresenter extends BaseApiPresenter
+{
+    /**
+     * @param int|null $id
+     * @return void
+     */
     #[Requires(methods: ['GET', 'POST', 'PUT', 'DELETE'], forward: false)]
-    public function actionDefault(?int $id): void {
-
+    public function actionDefault(?int $id): void
+    {
         $this->requireRole(UserRole::ADMIN);
 
         $response = $this->getHttpResponse();

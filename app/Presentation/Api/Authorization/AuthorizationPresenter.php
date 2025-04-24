@@ -1,8 +1,6 @@
-<?php declare(strict_types=1);
+<?php
 
-/**
- * @author David Koníček
- */
+declare(strict_types=1);
 
 namespace App\Presentation\Api\Authorization;
 
@@ -12,13 +10,17 @@ use Nette\Application\UI\Presenter;
 use Nette\Http\Response;
 use Tracy\Debugger;
 
-class AuthorizationPresenter extends Presenter {
-
+class AuthorizationPresenter extends Presenter
+{
     /** @var UserFacade $userFacade @inject */
     public UserFacade $userFacade;
 
+    /**
+     * @return void
+     */
     #[Requires(methods: ['POST'], forward: false)]
-    public function actionRegister() {
+    public function actionRegister()
+    {
         $data = json_decode($this->getHttpRequest()->getRawBody() ?? '', true) ?? [];
         $response = $this->getHttpResponse();
         try {
@@ -35,8 +37,12 @@ class AuthorizationPresenter extends Presenter {
         $this->terminate();
     }
 
+    /**
+     * @return void
+     */
     #[Requires(methods: ['POST'], forward: false)]
-    public function actionLogin() {
+    public function actionLogin()
+    {
         $data = json_decode($this->getHttpRequest()->getRawBody() ?? '', true) ?? [];
         $response = $this->getHttpResponse();
         $token = null;
