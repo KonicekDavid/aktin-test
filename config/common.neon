@@ -1,6 +1,6 @@
 parameters:
     jwt:
-        secret: 'LaAO8sgle3CNL6/MiM5l6A==' #TODO: move to local.neon
+        secret:
         ttl: 3600
 
 application:

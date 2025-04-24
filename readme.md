@@ -1,63 +1,89 @@
-Aktin test - REST API
-=================
+# REST API - Uživatelé a články (Nette + Docker + JWT)
 
-This is a simple, skeleton application using the [Nette](https://nette.org). This is meant to
-be used as a starting point for your new projects.
+Toto je ukázková implementace jednoduchého REST API v PHP 8.2 postaveného na frameworku **Nette**, určeného pro správu uživatelů a článků. API využívá autentizaci pomocí JWT a role pro řízení přístupu.
 
-[Nette](https://nette.org) is a popular tool for PHP web development.
-It is designed to be the most usable and friendliest as possible. It focuses
-on security and performance and is definitely one of the safest PHP frameworks.
+## ✅ Funkce
 
-If you like Nette, **[please make a donation now](https://nette.org/donate)**. Thank you!
+- **Registrace a přihlášení uživatelů** (JWT)
+- **CRUD operace** pro články a uživatele
+- **Role-based access control** (admin, author, reader)
+- **REST API** přístupné přes HTTP
+- **Spustitelné přes Docker Compose**
 
+[//]: # (- **Testy** pomocí Nette Tester)
 
-Requirements
-------------
+## 🛠 Požadavky
 
-- Web Project for Nette 3.0 requires PHP 8.2
+- Docker a Docker Compose
 
+## 🚀 Spuštění projektu
 
-Installation
-------------
+1. Naklonujte repozitář:
 
-The best way to install Web Project is using Composer. If you don't have Composer yet,
-download it following [the instructions](https://doc.nette.org/composer). Then use command:
+```
+git clone https://github.com/KonicekDavid/aktin-test.git
+cd aktin-test
+```
+2. Vytvořte vlastní konfigurační soubor **config/local.neon** a vložte do něj následující kód, přičemž **secretKey** nahraďte vlastním tajným klíčem:
 
-	composer create-project nette/web-project path/to/install
-	cd path/to/install
+```
+parameters:
+    jwt:
+        secret: 'secretKey'
+```
 
+3. Spusťte Docker:
+```
+docker-compose up --build
+```
+4. Aplikace bude dostupná na: http://localhost:8080
 
-Make directories `temp/` and `log/` writable. 
+## 🗃 Databáze
+Používá se SQLite. Po spuštění kontejneru se vytvoří databázový soubor database.sqlite.
 
-Create file **local.neon** in config/ directory
+## 🔑 Autorizace (JWT)
+Po přihlášení získejte token a přidávejte jej do HTTP hlavičky jako:
+```
+Authorization: Bearer <token>
+```
 
+## 📚 Příklady volání API
+1. Registrace uživatele
+```
+POST /auth/register
+Content-Type: application/json
 
-Web Server Setup
-----------------
+{
+  "email": "aktin@test.cz",
+  "password": "password",
+  "name": "Aktin",
+  "role": "author"
+}
+```
+2. Přihlášení uživatele
+```
+POST /auth/login
+Content-Type: application/json
 
-The simplest way to get started is to start the built-in PHP server in the root directory of your project:
+{
+  "email": "aktin@test.cz",
+  "password": "password"
+}
+```
+Odpověď:
+```
+{
+"token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6NCwiZW1haWwiOiJkYXZpZEB0ZXN0aWlpaWsuY3oiLCJyb2xlIjoicmVhZGVyIiwiZXhwIjoxNzQ1NTI2Nzg2fQ.jAfxzcynsFi4k3GH6Bg6tGk_uzxEppVv6eMqSSJjucg"
+}
+```
+3. Vytvoření článku
+```
+POST /articles
+Authorization: Bearer <token>
+Content-Type: application/json
 
-	php -S localhost:8000 -t www
-
-Then visit `http://localhost:8000` in your browser to see the welcome page.
-
-For Apache or Nginx, setup a virtual host to point to the `www/` directory of the project and you
-should be ready to go.
-
-**It is CRITICAL that whole `app/`, `log/` and `temp/` directories are not accessible directly
-via a web browser. See [security warning](https://nette.org/security-warning).**
-
-
-Notice: Composer PHP version
-----------------------------
-
-This project forces PHP 5.6 (eventually 7.1) as your PHP version for Composer packages. If you have newer 
-version on production server you should change it in `composer.json`:
-
-```json
-"config": {
-	"platform": {
-		"php": "7.2"
-	}
+{
+  "title": "První článek",
+  "content": "Obsah článku..."
 }
 ```

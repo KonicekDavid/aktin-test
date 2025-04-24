@@ -2,3 +2,4 @@
 app/config/local.neon
 /.idea
 /db
+/config/local.neon
