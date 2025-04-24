@@ -17,6 +17,7 @@ class Bootstrap
     {
         $this->rootDir = dirname(__DIR__);
         $this->configurator = new Configurator();
+        $this->configurator->setTimeZone('Europe/Prague');
         $this->configurator->setTempDirectory($this->rootDir . '/temp');
     }
 
