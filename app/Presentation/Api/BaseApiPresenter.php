@@ -6,6 +6,8 @@
 namespace App\Presentation\Api;
 
 use App\DTO\UserRole;
+use App\Model\Entity\User;
+use App\Model\Facade\UserFacade;
 use App\Security\JWTService;
 use Nette\Application\UI\Presenter;
 
@@ -17,11 +19,11 @@ abstract class BaseApiPresenter extends Presenter {
     /** @var UserRole $userRole */
     protected UserRole $userRole;
 
-    public function __construct(JWTService $jwtService)
-    {
-        parent::__construct();
-        $this->jwtService = $jwtService;
-    }
+    /** @var UserFacade $userFacade @inject */
+    public UserFacade $userFacade;
+
+    /** @var User $user */
+    protected User $user;
 
     protected function startup(): void
     {
@@ -35,7 +37,8 @@ abstract class BaseApiPresenter extends Presenter {
         $token = substr($authHeader, 7);
         try {
             $payload = $this->jwtService->validate($token);
-            $this->userRole = UserRole::from($payload['role']);
+            $this->user = $this->userFacade->getByEmail($payload['email']);
+            $this->userRole = UserRole::from($this->user->getRole());
         } catch (\Throwable $e) {
             $this->error('Forbidden', 403);
         }

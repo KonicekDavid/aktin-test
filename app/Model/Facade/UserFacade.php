@@ -6,13 +6,14 @@
 namespace App\Model\Facade;
 
 use App\DTO\UserRole;
+use App\Model\Entity\Article;
 use App\Model\Entity\User;
 use App\Security\JWTService;
 use Doctrine\ORM\EntityManagerInterface;
 use Nette\Security\Passwords;
-use Nette\Utils\Validators;
 
-class UserFacade {
+class UserFacade
+{
     public function __construct(
         private EntityManagerInterface $em,
         private Passwords              $passwords,
@@ -28,14 +29,14 @@ class UserFacade {
     public function create(array $values): User {
         $newUser = $this->prepareObject($values);
 
-        $user = $this->em->getRepository(User::class)->findBy(['email' => $newUser->getEmail()]);
+        $user = $this->em->getRepository(User::class)->findOneBy(['email' => $newUser->getEmail()]);
         if ($user) {
             throw new \InvalidArgumentException('User already exists.');
         }
 
         $this->em->persist($newUser);
         $this->em->flush();
-        return $user;
+        return $newUser;
     }
 
     /**
@@ -64,30 +65,6 @@ class UserFacade {
      */
     public function find(int $id): ?User {
         return $this->em->getRepository(User::class)->find($id);
-    }
-
-    /**
-     * @param array $values
-     * @return User
-     * @throws \InvalidArgumentException
-     */
-    private function prepareObject(array $values): User {
-        if (strlen($values['password']) < 8) {
-            throw new \InvalidArgumentException('Password must be at least 8 characters long');
-        }
-        $passwordHash = $this->passwords->hash($values['password']);
-
-        $role = $this->validateRole($values['role']);
-        $name = $this->validateName($values['name']);
-        $email = $this->validateEmail($values['email']);
-
-        $user = new User();
-        $user->setName($name);
-        $user->setEmail($email);
-        $user->setRole($role);
-        $user->setPasswordHash($passwordHash);
-
-        return $user;
     }
 
     /**
@@ -127,20 +104,18 @@ class UserFacade {
         }
 
         if (isset($data['name'])) {
-            $name = $this->validateName($data['name']);
-            $user->setName($name);
+            $user->setName($data['name']);
         }
 
         if (isset($data['email'])) {
-            $email = $this->validateEmail($data['email']);
-            $user->setEmail($email);
+            $user->setEmail($data['email']);
         }
 
         if (isset($data['role'])) {
-            $role = $this->validateRole($data['role']);
-            $user->setRole($role);
+            $user->setRole($data['role']);
         }
 
+        $this->em->persist($user);
         $this->em->flush();
 
         return $user;
@@ -157,42 +132,44 @@ class UserFacade {
             throw new \InvalidArgumentException("User not found!");
         }
 
+        if (count($this->em->getRepository(Article::class)->findBy(['author' => $user]))){
+            throw new \InvalidArgumentException("Cannot delete user with articles!");
+        }
+
         $this->em->remove($user);
         $this->em->flush();
     }
 
     /**
-     * @param string $rawEmail
-     * @return string
+     * @param string $email
+     * @return User
+     * @throws \ErrorException
      */
-    private function validateEmail(string $rawEmail): string {
-        $email = strtolower($rawEmail);
-        if (!Validators::isEmail($email)) {
-            throw new \InvalidArgumentException('Invalid email provided.');
+    public function getByEmail(string $email): User {
+        $user = $this->em->getRepository(User::class)->findOneBy(['email' => $email]);
+        if (!$user) {
+            throw new \ErrorException("User not found!");
         }
-        return $email;
+        return $user;
     }
 
     /**
-     * @param string $rawName
-     * @return string
+     * @param array $values
+     * @return User
+     * @throws \InvalidArgumentException
      */
-    private function validateName(string $rawName): string {
-        if ($rawName === '' || strlen($rawName) === 0 || strlen($rawName) > 100) {
-            throw new \InvalidArgumentException('Invalid name provided. Name must not be empty and max length is 100 characters.');
+    private function prepareObject(array $values): User {
+        if (strlen($values['password']) < 8) {
+            throw new \InvalidArgumentException('Password must be at least 8 characters long');
         }
-        return $rawName;
-    }
+        $passwordHash = $this->passwords->hash($values['password']);
 
-    /**
-     * @param string $rawRole
-     * @return string
-     */
-    private function validateRole(string $rawRole): string {
-        $role = strtolower($rawRole);
-        if (!UserRole::tryFrom($role)) {
-            throw new \InvalidArgumentException("Role '{$role}' not found!");
-        }
-        return $role;
+        $user = new User();
+        $user->setName($values['name']);
+        $user->setEmail($values['email']);
+        $user->setRole($values['role']);
+        $user->setPasswordHash($passwordHash);
+
+        return $user;
     }
 }

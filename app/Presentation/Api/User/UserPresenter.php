@@ -30,7 +30,7 @@ class UserPresenter extends BaseApiPresenter {
             case 'GET':
                 if ($id !== null) {
                     $user = $this->userFacade->getById($id);
-                    $user ? $this->sendJson($user) : $this->error('User not found', IResponse::S204_NoContent);
+                    $user ? $this->sendJson($user) : $this->error('User not found', IResponse::S404_NotFound);
                 } else {
                     $this->sendJson($this->userFacade->getAll());
                 }
@@ -41,8 +41,7 @@ class UserPresenter extends BaseApiPresenter {
                     $this->userFacade->create($data);
                     $response->setCode(Response::S201_Created);
                 } catch (\InvalidArgumentException $e) {
-                    $message = $e->getMessage();
-                    $response->setCode(Response::S400_BadRequest, $message);
+                    $response->setCode(Response::S400_BadRequest, $e->getMessage());
                 } catch (\Throwable $exception) {
                     Debugger::log($exception->getMessage(), Debugger::ERROR);
                     $message = 'Application error';
@@ -59,8 +58,7 @@ class UserPresenter extends BaseApiPresenter {
                         $response->setCode(Response::S400_BadRequest, 'Specified id is missing in url');
                     }
                 } catch (\InvalidArgumentException $e) {
-                    $message = $e->getMessage();
-                    $response->setCode(Response::S400_BadRequest, $message);
+                    $response->setCode(Response::S400_BadRequest, $e->getMessage());
                 } catch (\Throwable $exception) {
                     Debugger::log($exception->getMessage(), Debugger::ERROR);
                     $message = 'Application error';
@@ -76,8 +74,7 @@ class UserPresenter extends BaseApiPresenter {
                         $response->setCode(Response::S400_BadRequest, 'Specified id is missing in url');
                     }
                 } catch (\InvalidArgumentException $e) {
-                    $message = $e->getMessage();
-                    $response->setCode(Response::S400_BadRequest, $message);
+                    $response->setCode(Response::S400_BadRequest, $e->getMessage());
                 } catch (\Throwable $exception) {
                     Debugger::log($exception->getMessage(), Debugger::ERROR);
                     $message = 'Application error';

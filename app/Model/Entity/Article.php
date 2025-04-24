@@ -38,7 +38,7 @@ class Article {
      */
     #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(name: 'author_id', referencedColumnName: 'id', nullable: false, onDelete: 'CASCADE')]
-    private User $author;
+    public User $author;
 
     /**
      * @var DateTimeImmutable
@@ -51,4 +51,31 @@ class Article {
      */
     #[ORM\Column(type: 'datetime_immutable')]
     public DateTimeImmutable $updatedAt;
+
+    public function setTitle(string $title): void {
+        $this->title = $this->validateTitle($title);
+    }
+
+    public function setContent(string $content): void {
+        $this->content = $content;
+    }
+
+    public function setCreatedAt(DateTimeImmutable $createdAt): void {
+        $this->createdAt = $createdAt;
+    }
+
+    public function setUpdatedAt(DateTimeImmutable $updatedAt): void {
+        $this->updatedAt = $updatedAt;
+    }
+
+    public function setAuthor(User $author): void {
+        $this->author = $author;
+    }
+
+    private function validateTitle(string $title): string {
+        if (empty($title) || strlen($title) < 1) {
+            throw new \InvalidArgumentException('Title cannot be empty');
+        }
+        return $title;
+    }
 }

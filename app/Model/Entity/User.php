@@ -5,9 +5,11 @@
 
 namespace App\Model\Entity;
 
+use App\DTO\UserRole;
 use App\Model\Repository\UserRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Nette\Utils\Validators;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: 'user')]
@@ -98,7 +100,7 @@ class User {
      * @return void
      */
     public function setEmail(string $email): void {
-        $this->email = $email;
+        $this->email = $this->validateEmail($email);
     }
 
     /**
@@ -114,7 +116,7 @@ class User {
      * @return void
      */
     public function setName(string $name): void {
-        $this->name = $name;
+        $this->name = $this->validateName($name);
     }
 
     /**
@@ -122,6 +124,41 @@ class User {
      * @return void
      */
     public function setRole(string $role): void {
-        $this->role = $role;
+        $this->role = $this->validateRole($role);
+    }
+
+    /**
+     * @param string $rawEmail
+     * @return string
+     */
+    private function validateEmail(string $rawEmail): string {
+        $email = strtolower($rawEmail);
+        if (!Validators::isEmail($email)) {
+            throw new \InvalidArgumentException('Invalid email provided.');
+        }
+        return $email;
+    }
+
+    /**
+     * @param string $rawName
+     * @return string
+     */
+    private function validateName(string $rawName): string {
+        if ($rawName === '' || strlen($rawName) === 0 || strlen($rawName) > 100) {
+            throw new \InvalidArgumentException('Invalid name provided. Name must not be empty and max length is 100 characters.');
+        }
+        return $rawName;
+    }
+
+    /**
+     * @param string $rawRole
+     * @return string
+     */
+    private function validateRole(string $rawRole): string {
+        $role = strtolower($rawRole);
+        if (!UserRole::tryFrom($role)) {
+            throw new \InvalidArgumentException("Role '{$role}' not found!");
+        }
+        return $role;
     }
 }
