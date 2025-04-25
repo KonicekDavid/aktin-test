@@ -29,11 +29,13 @@
 		"nette/tester": "^2.5",
 		"symfony/thanks": "^1",
 		"squizlabs/php_codesniffer": "^3.12",
-		"phpstan/phpstan": "^2.1"
+		"phpstan/phpstan": "^2.1",
+		"mockery/mockery": "^1.6"
 	},
 	"autoload": {
 		"psr-4": {
-			"App\\": "app"
+			"App\\": "app",
+			"Tests\\": "tests"
 		}
 	},
 	"minimum-stability": "stable",
