@@ -47,8 +47,28 @@ Po přihlášení získejte token a přidávejte jej do HTTP hlavičky jako:
 Authorization: Bearer <token>
 ```
 
+## 📍 Endpointy
+```
+POST /auth/register - registrace nového uživatele (povinné údaje - email, password, name)
+POST /auth/login - přihlášení uživatele - vrací JWT token (povinné údaje - email, password)
+
+# Pouze admin role
+GET /users - vrací seznam uživatelů
+GET /users/{id} - vrací konkrétního uživatele
+POST /users - vytváří nového uživatele
+PUT /users/{id} - upravuje konkrétního uživatele
+DELETE /users/{id} - maže konkrétního uživatele
+
+# Různá omezení rolí
+GET /articles - vrací seznam článků (všechny role)
+GET /articles/{id} - vrací konkrétní článek (všechny role)
+POST /articles - vytváří nový článek (pouze role admin nebo author)
+PUT /articles/{id} - upravuje konkrétní článek (pouze role admin nebo author daného článku)
+DELETE /articles/{id} - maže konkrétní článek (pouze role admin nebo author daného článku)
+```
+
 ## 📚 Příklady volání API
-1. Registrace uživatele
+1. Registrace uživatele (vytváří uživatele s výchozí rolí **reader**)
 ```
 POST /auth/register
 Content-Type: application/json
@@ -56,8 +76,7 @@ Content-Type: application/json
 {
   "email": "aktin@test.cz",
   "password": "password",
-  "name": "Aktin",
-  "role": "author"
+  "name": "Aktin"
 }
 ```
 2. Přihlášení uživatele
@@ -85,5 +104,14 @@ Content-Type: application/json
 {
   "title": "První článek",
   "content": "Obsah článku..."
+}
+```
+
+## 🔧 Testování
+Pro účely testování, se při buildu aplikace vytvoří uživatel s rolí **admin**.
+```
+{
+  "email": "superuser@email.cz",
+  "password": "superuser"
 }
 ```
