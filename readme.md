@@ -1,6 +1,6 @@
 # REST API - Uživatelé a články (Nette + Docker + JWT)
 
-Toto je ukázková implementace jednoduchého REST API v PHP 8.2 postaveného na frameworku **Nette**, určeného pro správu uživatelů a článků. API využívá autentizaci pomocí JWT a role pro řízení přístupu.
+Toto je ukázková implementace jednoduchého REST API v PHP 8.2 postaveného na frameworku **Nette**, určeného pro správu uživatelů a článků. API využívá autentizaci pomocí JWT a role pro řízení přístupu. Povolené role jsou reader, author a admin.
 
 ## ✅ Funkce
 
@@ -68,7 +68,7 @@ DELETE /articles/{id} - maže konkrétní článek (pouze role admin nebo author
 ```
 
 ## 📚 Příklady volání API
-1. Registrace uživatele (vytváří uživatele s výchozí rolí **reader**)
+1. Registrace uživatele
 ```
 POST /auth/register
 Content-Type: application/json
@@ -76,7 +76,8 @@ Content-Type: application/json
 {
   "email": "aktin@test.cz",
   "password": "password",
-  "name": "Aktin"
+  "name": "Aktin",
+  "role": "author"
 }
 ```
 2. Přihlášení uživatele
@@ -104,14 +105,5 @@ Content-Type: application/json
 {
   "title": "První článek",
   "content": "Obsah článku..."
-}
-```
-
-## 🔧 Testování
-Pro účely testování, se při buildu aplikace vytvoří uživatel s rolí **admin**.
-```
-{
-  "email": "superuser@email.cz",
-  "password": "superuser"
 }
 ```

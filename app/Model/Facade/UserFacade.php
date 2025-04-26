@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Model\Facade;
 
-use App\DTO\UserRole;
 use App\Model\Entity\Article;
 use App\Model\Entity\User;
 use App\Security\JWTService;
@@ -87,16 +86,6 @@ class UserFacade
     }
 
     /**
-     * @param array $data
-     * @return User
-     */
-    public function createReader(array $data): User
-    {
-        $data['role'] = UserRole::READER->value;
-        return $this->create($data);
-    }
-
-    /**
      * @param int $id
      * @param array $data
      * @return User
@@ -168,6 +157,13 @@ class UserFacade
      */
     private function prepareObject(array $values): User
     {
+        $keys = ['password', 'name', 'email', 'role'];
+        foreach ($keys as $key) {
+            if (!isset($values[$key])) {
+                throw new \InvalidArgumentException(ucfirst($key) . ' is not set.');
+            }
+        }
+
         if (strlen($values['password']) < 8) {
             throw new \InvalidArgumentException('Password must be at least 8 characters long');
         }

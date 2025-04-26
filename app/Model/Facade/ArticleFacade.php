@@ -21,6 +21,14 @@ class ArticleFacade
      */
     public function create(array $data, User $user): Article
     {
+        if (!isset($data['title'])) {
+            throw new \InvalidArgumentException('Title is required.');
+        }
+
+        if (!isset($data['content'])) {
+            throw new \InvalidArgumentException('Content is required.');
+        }
+
         $now = new \DateTimeImmutable();
 
         $article = new Article();
@@ -64,7 +72,7 @@ class ArticleFacade
         }
 
         if (isset($data['content'])) {
-            $article->setTitle($data['content']);
+            $article->setContent($data['content']);
         }
 
         $article->setUpdatedAt(new \DateTimeImmutable());

@@ -180,7 +180,7 @@ class User
     {
         $role = strtolower($rawRole);
         if (!UserRole::tryFrom($role)) {
-            throw new \InvalidArgumentException("Role '{$role}' not found!");
+            throw new \InvalidArgumentException("Role '{$role}' not found! Allowed: reader, author or admin.");
         }
         return $role;
     }

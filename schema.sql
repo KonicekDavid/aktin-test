@@ -17,5 +17,3 @@ CREATE TABLE IF NOT EXISTS article (
     updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (author_id) REFERENCES user(id) ON DELETE CASCADE
 );
-
-INSERT INTO user (email, password_hash, name, role) VALUES ('superuser@email.cz', '$2y$10$O6XdIDfWx0w9htl5llVO..ZZmqzkxBTEiuFIithlxYni79RQPIHtu', 'Superuser', 'admin');
