@@ -1,5 +1,5 @@
 {
-	"name": "konicekdavid/aktin-test",
+	"name": "konicekdavid/api-test",
 	"description": "Mini REST API app",
 	"keywords": ["nette"],
 	"type": "project",

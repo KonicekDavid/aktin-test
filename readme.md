@@ -21,8 +21,8 @@ Toto je ukázková implementace jednoduchého REST API v PHP 8.2 postaveného na
 1. Naklonujte repozitář:
 
 ```
-git clone https://github.com/KonicekDavid/aktin-test.git
-cd aktin-test
+git clone https://github.com/KonicekDavid/api-test.git
+cd api-test
 ```
 2. Vytvořte vlastní konfigurační soubor **config/local.neon** a vložte do něj následující kód, přičemž **secretKey** nahraďte vlastním tajným klíčem:
 
@@ -74,9 +74,9 @@ POST /auth/register
 Content-Type: application/json
 
 {
-  "email": "aktin@test.cz",
+  "email": "jan.novak@test.cz",
   "password": "password",
-  "name": "Aktin",
+  "name": "Jan Novák",
   "role": "author"
 }
 ```
@@ -86,7 +86,7 @@ POST /auth/login
 Content-Type: application/json
 
 {
-  "email": "aktin@test.cz",
+  "email": "jan.novak@test.cz",
   "password": "password"
 }
 ```
